@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
-import models
-from util import util
+
+from . import models
+from .util import util
 
 LPIPS_MODEL = None
 
