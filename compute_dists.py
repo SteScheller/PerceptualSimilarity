@@ -2,8 +2,13 @@
 
 import argparse
 
-from . import models
-from .util import util
+if __name__ == '__main__':
+    from models import perceptual_model as model
+    from util import util
+else:
+    from .models import perceptual_model as model
+    from .util import util
+
 
 LPIPS_MODEL = None
 
@@ -15,7 +20,7 @@ def compute_lpips(
     ## Initialize the model if it is not yet setup
     global LPIPS_MODEL
     if LPIPS_MODEL is None:
-        LPIPS_MODEL = models.PerceptualLoss(
+        LPIPS_MODEL = model.PerceptualLoss(
                 model='net-lin', net='alex', use_gpu=useGpu)
 
     # Load images
@@ -26,7 +31,7 @@ def compute_lpips(
         img1 = img1.cuda()
 
     # Compute distance
-    return LPIPS_MODEL.forward(img0, img1)
+    return float(LPIPS_MODEL.forward(img0, img1))
 
 ###############################################################################
 # script execution
