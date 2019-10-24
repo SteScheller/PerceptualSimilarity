@@ -15,6 +15,8 @@ LPIPS_MODEL = None
 def compute_lpips(
     pathImg0: str,
     pathImg1: str,
+    imagePartOrigin=None,
+    imagePartDim=(0,0),
     useGpu: bool=True ) -> float:
 
     ## Initialize the model if it is not yet setup
@@ -24,9 +26,12 @@ def compute_lpips(
                 model='net-lin', net='alex', use_gpu=useGpu)
 
     # Load images
-    img0 = util.im2tensor(util.load_image(pathImg0)) # RGB image from [-1,1]
-    img1 = util.im2tensor(util.load_image(pathImg1))
-    if(useGpu):
+    img0 = util.im2tensor(
+        util.load_image(pathImg0, imagePartOrigin, imagePartDim))
+    img1 = util.im2tensor(
+        util.load_image(pathImg1, imagePartOrigin, imagePartDim))
+
+    if (useGpu):
         img0 = img0.cuda()
         img1 = img1.cuda()
 

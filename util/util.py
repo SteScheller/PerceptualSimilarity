@@ -7,7 +7,12 @@ import os
 import matplotlib.pyplot as plt
 import torch
 
-def load_image(path):
+# Note:
+# This method was modified such that only a part of the image can be loaded.
+#
+#   partOrigin:     tuple of x and y indices
+#   partDim:        tuple with width and height of image part
+def load_image(path, partOrigin=None, partDim=(0, 0)):
     if(path[-3:] == 'dng'):
         import rawpy
         with rawpy.imread(path) as raw:
@@ -18,6 +23,10 @@ def load_image(path):
     else:
         img = (255*plt.imread(path)[:,:,:3]).astype('uint8')
 
+    if partOrigin is not None:
+        x, y = partOrigin
+        w, h = partDim
+        img = img[x:x+w,y:y+h,:]
     return img
 
 def save_image(image_numpy, image_path, ):
