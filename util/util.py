@@ -27,6 +27,7 @@ def load_image(path, partOrigin=None, partDim=(0, 0)):
         x, y = partOrigin
         w, h = partDim
         img = img[x:x+w,y:y+h,:]
+
     return img
 
 def save_image(image_numpy, image_path, ):
