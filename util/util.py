@@ -19,14 +19,14 @@ def load_image(path, partOrigin=None, partDim=(0, 0)):
             img = raw.postprocess()
     elif(path[-3:]=='bmp' or path[-3:]=='jpg' or path[-3:]=='png'):
         import cv2
-        return cv2.imread(path)[:,:,::-1]
+        img = cv2.imread(path)[:,:,::-1]
     else:
         img = (255*plt.imread(path)[:,:,:3]).astype('uint8')
 
     if partOrigin is not None:
         x, y = partOrigin
         w, h = partDim
-        img = img[x:x+w,y:y+h,:]
+        img = np.ascontiguousarray(img[x:x+w,y:y+h,:], dtype=np.uint8)
 
     return img
 
