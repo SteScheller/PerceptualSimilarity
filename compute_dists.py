@@ -51,6 +51,6 @@ if __name__ == '__main__':
 
     opt = parser.parse_args()
 
-    dist01 = compute_lpips(opt.path0, opt.path1, opt.use_gpu)
+    dist01 = compute_lpips(opt.path0, opt.path1, useGpu=opt.use_gpu)
     print('Distance: %.3f'%dist01)
 
