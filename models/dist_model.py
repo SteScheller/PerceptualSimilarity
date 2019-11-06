@@ -113,8 +113,10 @@ class DistModel(BaseModel):
         OUTPUT
             computed distances between in0 and in1
         '''
+        with torch.no_grad():
+            result = self.net.forward(in0, in1, retPerLayer=retPerLayer)
 
-        return self.net.forward(in0, in1, retPerLayer=retPerLayer)
+        return result
 
     # ***** TRAINING FUNCTIONS *****
     def optimize_parameters(self):
