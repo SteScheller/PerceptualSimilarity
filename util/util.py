@@ -52,6 +52,21 @@ def load_image(path, partOrigin=None, partDim=(0, 0)):
 
     return img
 
+"""
+Loads an (cropped) image from the disk and return the according PyTorch
+tensor.
+"""
+@functools.lru_cache(maxsize=IMG_CACHE_COUNT)
+def load_tensor(path, partOrigin=None, partDim=(0, 0), useGpu=False):
+    img = load_image(path, partOrigin, partDim)
+    tensor = im2tensor(img)
+
+    if useGpu:
+        tensor = tensor.cuda()
+
+    return tensor
+
+#------------------------------------------------------------------------------
 def save_image(image_numpy, image_path, ):
     image_pil = Image.fromarray(image_numpy)
     image_pil.save(image_path)

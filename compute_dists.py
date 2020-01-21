@@ -26,14 +26,8 @@ def compute_lpips(
                 model='net-lin', net='alex', use_gpu=useGpu)
 
     # Load images
-    img0 = util.im2tensor(
-        util.load_image(pathImg0, imagePartOrigin, imagePartDim))
-    img1 = util.im2tensor(
-        util.load_image(pathImg1, imagePartOrigin, imagePartDim))
-
-    if (useGpu):
-        img0 = img0.cuda()
-        img1 = img1.cuda()
+    img0 = util.load_tensor(pathImg0, imagePartOrigin, imagePartDim, useGpu)
+    img1 = util.load_tensor(pathImg1, imagePartOrigin, imagePartDim, useGpu)
 
     # Compute distance
     return float(LPIPS_MODEL.forward(img0, img1))
